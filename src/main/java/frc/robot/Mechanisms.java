@@ -29,10 +29,10 @@ public class Mechanisms {
                                 append(new MechanismLigament2d("vertical_stop", 0.5, 90, 6, new Color8Bit(Color.kCyan)));
 
     MechanismLigament2d pumpkin = mech.
-                                getRoot("pumpkin", 3.3, 0.18).
+                                getRoot("pumpkin", 3.7, 0.18).
                                 append(new MechanismLigament2d("pumpkin", 0.05, 0, 6, new Color8Bit(Color.kOrange)));
 
-    public final Pumpkin m_pumpkin = new Pumpkin(3.3,0.18,0,0);
+    public final Pumpkin m_pumpkin = new Pumpkin(3.5,0.18,0,0);
     /**
      * Runs the mech2d widget in GUI.
      *  

@@ -115,6 +115,13 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("Pumpkin X Velocity", m_mechanism.m_pumpkin.get_velocity()[0]);
     SmartDashboard.putNumber("Pumpkin Y Velocity", m_mechanism.m_pumpkin.get_velocity()[1]);
+    SmartDashboard.putNumber("Pumpkin X Position", m_mechanism.m_pumpkin.get_position()[0]);
+    SmartDashboard.putNumber("Pumpkin Y Position", m_mechanism.m_pumpkin.get_position()[1]);
+
+
+    if (((m_mechanism.m_pumpkin.get_position()[1]) < 0.2) && ((m_mechanism.m_pumpkin.get_position()[1]) > 0)) {
+      System.out.println("Pumpking landing distance is " + (3.5 - m_mechanism.m_pumpkin.get_position()[0]));
+    }
   }
 
   @Override

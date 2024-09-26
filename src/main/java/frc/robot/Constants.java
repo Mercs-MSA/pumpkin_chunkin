@@ -4,11 +4,11 @@ import edu.wpi.first.math.util.Units;
 
 public class Constants {
   public static final double gravity_acceleration = -9.8; // m per second^2
-  public static final double top_limit = 0.25;   // Upper physical stop in rotations
+  public static final double top_limit = 0.208;   // Upper physical stop in rotations
   public static final double bottom_limit = 0;   // Bottom physical stop in rotations
   public static final double kArmReduction = 20;
-  public static final double kArmMass = Units.lbsToKilograms(10); // Kilograms
-  public static final double kArmLength = Units.inchesToMeters(24);  // 0.6096 m = 2"
+  public static final double kArmMass = Units.lbsToKilograms(7); // Kilograms
+  public static final double kArmLength = Units.inchesToMeters(36);  // 0.6096 m = 2"
   public static final double kStartingAngle = 0.0;
   public static final boolean direction = true;  // true is clockwise, false is counter clockwise
 
