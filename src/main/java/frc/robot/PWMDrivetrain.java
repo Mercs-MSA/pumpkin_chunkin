@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.motorcontrol.PWMTalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 /* This class declares the subsystem for the robot drivetrain if controllers are connected via PWM. If using SPARK MAX
@@ -30,15 +29,15 @@ public class PWMDrivetrain extends SubsystemBase {
      * as we will not need to reference them directly anymore after we put them into a DifferentialDrive.
      */
 
-    PWMTalonFX leftFrontMotor = new PWMTalonFX(21);
-    PWMTalonFX leftRearMotor = new PWMTalonFX(23);
-    PWMTalonFX rightFrontMotor = new PWMTalonFX(20);
-    PWMTalonFX rightRearMotor = new PWMTalonFX(22);
+    WPI_TalonFX leftFrontMotor = new WPI_TalonFX(21);
+    WPI_TalonFX leftRearMotor = new WPI_TalonFX(23);
+    WPI_TalonFX rightFrontMotor = new WPI_TalonFX(20);
+    WPI_TalonFX rightRearMotor = new WPI_TalonFX(22);
 
-    leftFrontMotor.addFollower(leftRearMotor);
+    leftFrontMotor.follow(leftRearMotor);
     leftRearMotor.setInverted(true);
     leftFrontMotor.setInverted(false);
-    rightFrontMotor.addFollower(rightRearMotor);
+    rightFrontMotor.follow(rightRearMotor);
     rightRearMotor.setInverted(true);
     rightFrontMotor.setInverted(false);
 

@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
   private final TalonFX my_KrakenX60_Motor = new TalonFX(19);
   private TalonFXConfiguration configs = new TalonFXConfiguration();
 
-  //private final PWMDrivetrain m_drivetrain = new PWMDrivetrain();
+  private final PWMDrivetrain m_drivetrain = new PWMDrivetrain();
 
   /* Start at position 0, use slot 0 for those settings */
   private final PositionVoltage m_positionVoltage = new PositionVoltage(0).withSlot(0);
@@ -47,6 +47,8 @@ public class Robot extends TimedRobot {
   private boolean within_time_window = false;
   private final NeutralModeValue m_brake = NeutralModeValue.Brake;
   private double m_timer = 0.0;
+
+  private boolean fireCommand = false;
 
   // Simulation Stuff
   private final Mechanisms m_mechanism = new Mechanisms();
@@ -103,6 +105,8 @@ public class Robot extends TimedRobot {
 
     /* Make sure we start at position 0; this affects */
     my_KrakenX60_Motor.setPosition(0);
+
+    my_KrakenX60_Motor.setControl(m_positionVoltage.withPosition(-4.15));
   }
 
   @Override
@@ -122,31 +126,35 @@ public class Robot extends TimedRobot {
 
 
     if (((m_mechanism.m_pumpkin.get_position()[1]) < 0.2) && ((m_mechanism.m_pumpkin.get_position()[1]) > 0)) {
-      System.out.println("Pumpking landing distance is " + (3.5 - m_mechanism.m_pumpkin.get_position()[0]));
+      //System.out.println("Pumpking landing distance is " + (3.5 - m_mechanism.m_pumpkin.get_position()[0]));
     }
   }
 
   @Override
   public void teleopInit() {
+
   }
 
   @Override
   public void teleopPeriodic() {
 
     if (m_joystick.getAButton()) {
+      fireCommand = true;
+    }
 
-      if (my_KrakenX60_Motor.getPosition().getValueAsDouble() > -4.2) {
-        my_KrakenX60_Motor.setControl(m_dutyCycle.withOutput(-0.9));
-      }
-      else {
-        my_KrakenX60_Motor.setControl(m_dutyCycle.withOutput(0.0));    
-      }
-    }    
-    if (my_KrakenX60_Motor.getPosition().getValueAsDouble() < -4.2) {
+    if (fireCommand && (my_KrakenX60_Motor.getPosition().getValueAsDouble() < -4.2)) {
+      fireCommand = false;
+      my_KrakenX60_Motor.setControl(m_positionVoltage.withPosition(-4.15));
+    }
+    else if (fireCommand && (my_KrakenX60_Motor.getPosition().getValueAsDouble() > -4.2)){
+      my_KrakenX60_Motor.setControl(m_dutyCycle.withOutput(-0.9));
+    }
+
+    if (m_joystick.getBButton()) {
       my_KrakenX60_Motor.setControl(m_dutyCycle.withOutput(0.0));
     }
 
-    //m_drivetrain.arcadeDrive(-m_joystick.getLeftY(), -m_joystick.getRightX());
+    m_drivetrain.arcadeDrive(-0.5*m_joystick.getLeftY(), -0.5*m_joystick.getRightY());
   }
 
   @Override
