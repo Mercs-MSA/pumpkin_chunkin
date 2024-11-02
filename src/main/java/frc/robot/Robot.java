@@ -31,8 +31,10 @@ import com.ctre.phoenix6.sim.TalonFXSimState;
  * project.
  */
 public class Robot extends TimedRobot {
-  private final TalonFX my_KrakenX60_Motor = new TalonFX(20);
+  private final TalonFX my_KrakenX60_Motor = new TalonFX(19);
   private TalonFXConfiguration configs = new TalonFXConfiguration();
+
+  //private final PWMDrivetrain m_drivetrain = new PWMDrivetrain();
 
   /* Start at position 0, use slot 0 for those settings */
   private final PositionVoltage m_positionVoltage = new PositionVoltage(0).withSlot(0);
@@ -100,7 +102,7 @@ public class Robot extends TimedRobot {
     }
 
     /* Make sure we start at position 0; this affects */
-    //my_KrakenX60_Motor.setPosition(0);
+    my_KrakenX60_Motor.setPosition(0);
   }
 
   @Override
@@ -132,37 +134,19 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
 
     if (m_joystick.getAButton()) {
-      /* Use duty cycle request */
-      my_KrakenX60_Motor.setControl(m_dutyCycle.withOutput(1.0));
-    }
-    if (m_joystick.getBButton()) {
-      /* Use velocity voltage */
-      my_KrakenX60_Motor.setControl(m_positionVoltage.withPosition(0.0));
+
+      if (my_KrakenX60_Motor.getPosition().getValueAsDouble() > -4.2) {
+        my_KrakenX60_Motor.setControl(m_dutyCycle.withOutput(-0.9));
+      }
+      else {
+        my_KrakenX60_Motor.setControl(m_dutyCycle.withOutput(0.0));    
+      }
+    }    
+    if (my_KrakenX60_Motor.getPosition().getValueAsDouble() < -4.2) {
+      my_KrakenX60_Motor.setControl(m_dutyCycle.withOutput(0.0));
     }
 
-/*     else if (m_joystick.getAButton()) {
-      //desiredRotations = -4.0;
-      motor_homing_enabled = true;
-      within_time_window = true;
-      m_timer = System.currentTimeMillis();
-    }
-    else if (m_joystick.getBButton()) {
-      desiredRotations = 0.0;
-      motor_homing_enabled = false;
-    }
-
-
-    if ((System.currentTimeMillis() - m_timer) > 0.1) {
-      within_time_window = false;
-    }
-
-    if (motor_homing_enabled == true) {
-      motor_homing(true, 0.03, 0.8);
-    }
-    else {
-      //my_KrakenX60_Motor.setControl(m_positionVoltage.withOverrideBrakeDurNeutral(true));
-    }
-*/
+    //m_drivetrain.arcadeDrive(-m_joystick.getLeftY(), -m_joystick.getRightX());
   }
 
   @Override
