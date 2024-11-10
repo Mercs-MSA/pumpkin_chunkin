@@ -106,7 +106,7 @@ public class Robot extends TimedRobot {
     /* Make sure we start at position 0; this affects */
     my_KrakenX60_Motor.setPosition(0);
 
-    my_KrakenX60_Motor.setControl(m_positionVoltage.withPosition(-4.15));
+    my_KrakenX60_Motor.setControl(m_positionVoltage.withPosition(-2.2));
   }
 
   @Override
@@ -138,16 +138,16 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    if (m_joystick.getAButton()) {
+    if ((m_joystick.getAButton()) && (my_KrakenX60_Motor.getPosition().getValueAsDouble() > -2.1)) {
       fireCommand = true;
     }
 
-    if (fireCommand && (my_KrakenX60_Motor.getPosition().getValueAsDouble() < -4.2)) {
+    if (fireCommand && (my_KrakenX60_Motor.getPosition().getValueAsDouble() < -2.1)) {
       fireCommand = false;
-      my_KrakenX60_Motor.setControl(m_positionVoltage.withPosition(-4.15));
+      my_KrakenX60_Motor.setControl(m_positionVoltage.withPosition(-2.2));
     }
-    else if (fireCommand && (my_KrakenX60_Motor.getPosition().getValueAsDouble() > -4.2)){
-      my_KrakenX60_Motor.setControl(m_dutyCycle.withOutput(-0.9));
+    else if (fireCommand && (my_KrakenX60_Motor.getPosition().getValueAsDouble() > -2.1)){
+      my_KrakenX60_Motor.setControl(m_dutyCycle.withOutput(-0.95));
     }
 
     if (m_joystick.getBButton()) {
